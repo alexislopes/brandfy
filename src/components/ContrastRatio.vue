@@ -1,5 +1,7 @@
 <template>
   <div class="contrast-ratio">
+
+
     <div class="circle" :style="`background: ${color};`"></div>
     <p>{{ ratio }}</p>
     <span v-if="ratio >= 4.5" class="material-icons" style="color: var(--success)">
@@ -28,6 +30,8 @@ const { color, ratio } = toRefs(props)
 .contrast-ratio {
   display: flex;
   gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
 }
 
 .circle {

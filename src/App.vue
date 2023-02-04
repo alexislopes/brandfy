@@ -26,6 +26,10 @@ function changeLightness(e) {
 
 const titles = ref([
   {
+    nome: "Brand",
+    style: '--brand'
+  },
+  {
     nome: 'Text 1',
     style: '--text1'
   },
@@ -103,45 +107,55 @@ const index = ref(0)
         </section>
       </div>
       <section class="brand-info">
-        <div class="info">
-          <div class="circle brand"></div>
-          <p>Brand</p>
+        <div class="info" v-for="title in titles">
+          <div class="circle" :style="`background: var(${title.style})`"></div>
+          <p>{{ title.nome }}</p>
+          <span class="material-icons" style="cursor: pointer;">
+            tune
+          </span>
         </div>
-        <div class="info">
+        <!-- <div class="info">
           <div class="circle text1"></div>
           <p style="color: var(--text1)">Text Color 1</p>
+          <span class="material-icons">
+            tune
+          </span>
         </div>
         <div class="info">
           <div class="circle text2"></div>
           <p style="color: var(--text2)">Text Color 2</p>
+          <span class="material-icons">
+            tune
+          </span>
         </div>
         <div class="info">
           <div class="circle info-accent"></div>
           <p>Info</p>
-          <img @click="randomInfoHue" src="./assets/shuffle_black_24dp.svg" alt="shuffle info color hue"
-            style="cursor: pointer" />
-
+          <span class="material-icons">
+            tune
+          </span>
         </div>
         <div class="info">
           <div class="circle fail-accent"></div>
           <p>Fail</p>
-          <img @click="randomFailHue" src="./assets/shuffle_black_24dp.svg" alt="shuffle fail color hue"
-            style="cursor: pointer" />
-
+          <span class="material-icons">
+            tune
+          </span>
         </div>
         <div class="info">
           <div class="circle success-accent"></div>
           <p>Success</p>
-          <img @click="randomSuccessHue" src="./assets/shuffle_black_24dp.svg" alt="shuffle success color hue"
-            style="cursor: pointer" />
-
+          <span class="material-icons">
+            tune
+          </span>
         </div>
         <div class="info">
           <div class="circle caution-accent"></div>
           <p>Caution</p>
-          <img @click="randomCautionHue" src="./assets/shuffle_black_24dp.svg" alt="shuffle caution color hue"
-            style="cursor: pointer" />
-        </div>
+          <span class="material-icons">
+            tune
+          </span>
+        </div> -->
         <!-- <p>Saturation</p>
         <input type="range" @input="changeSaturation" name="" id="">
 
@@ -239,6 +253,8 @@ p {
 }
 
 .info {
+  justify-content: start;
+  align-items: center;
   display: flex;
   gap: 0.5rem;
 }
