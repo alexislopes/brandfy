@@ -79,11 +79,11 @@ export const useColorScheme = (brandColor) => {
   `)
 
   const fail_hue = randomIntFromInterval(0, 15)
-  const success_hue = randomIntFromInterval(70, 150)
-  const caution_hue = randomIntFromInterval(30, 60)
-  const info_hue = randomIntFromInterval(170, 240)
+  const success_hue = randomIntFromInterval(81, 140)
+  const caution_hue = randomIntFromInterval(51, 60)
+  const info_hue = randomIntFromInterval(221, 240)
   const saturation = randomPercentage()
-  const lightness = randomPercentage()
+  const lightness = randomIntFromInterval(20, 50)
 
 
   onUpdated(() => {

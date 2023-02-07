@@ -5,6 +5,7 @@ import { useColorScheme } from './composables/useColorScheme.js'
 import { useColorUtils } from './composables/useColorUtils.js'
 
 import ContrastRatio from './components/ContrastRatio.vue'
+import ColorTunning from './components/ColorTunning.vue'
 
 const { getStyle, getContrast } = useColorUtils();
 
@@ -53,8 +54,12 @@ const titles = ref([
     nome: 'Caution',
     style: '--caution-hex'
   }
-])
-const index = ref(0)
+]);
+
+const selectedColor = ref(undefined);
+const index = ref(0);
+
+
 
 </script>
 
@@ -83,19 +88,19 @@ const index = ref(0)
             <div class="container">
               <div class="box rad-shadow surface1">
                 <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="getContrast(getStyle(titles[index].style), getStyle('--surface1'))" />
+                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface1')))" />
               </div>
               <div class="box rad-shadow surface2">
                 <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="getContrast(getStyle(titles[index].style), getStyle('--surface2'))" />
+                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface2')))" />
               </div>
               <div class="box rad-shadow surface3">
                 <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="getContrast(getStyle(titles[index].style), getStyle('--surface3'))" />
+                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface3')))" />
               </div>
               <div class="box rad-shadow surface4">
                 <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="getContrast(getStyle(titles[index].style), getStyle('--surface4'))" />
+                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface4')))" />
               </div>
             </div>
           </div>
@@ -110,10 +115,13 @@ const index = ref(0)
         <div class="info" v-for="title in titles">
           <div class="circle" :style="`background: var(${title.style})`"></div>
           <p>{{ title.nome }}</p>
-          <span class="material-icons" style="cursor: pointer;">
+          <span @click="selectedColor = getStyle(title.style); index = titles.findIndex(elm => elm.nome === title.nome)"
+            class="material-icons" style="cursor: pointer;">
             tune
           </span>
         </div>
+        <ColorTunning v-if="selectedColor" :hex="selectedColor" />
+
         <!-- <div class="info">
           <div class="circle text1"></div>
           <p style="color: var(--text1)">Text Color 1</p>
