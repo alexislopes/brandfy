@@ -2,16 +2,18 @@
   <div class="contrast-ratio">
     <div class="circle" :style="`background: ${color};`"></div>
     <p>{{ ratio.toFixed(2) }}</p>
-    <span v-if="ratio >= 4.5" class="material-icons" style="color: var(--success)">
+    <span v-if="ratio >= 4.5" class="material-icons" :style="`color: ${colorStore.colorScheme.success}`">
       check
     </span>
-    <span v-else class="material-icons" style="color: var(--fail)">
+    <span v-else class="material-icons" :style="`color: ${colorStore.colorScheme.fail}`">
       clear
     </span>
   </div>
 </template>
 
 <script setup>
+import { useColorStore } from '../stores/useColorStore.js'
+const colorStore = useColorStore()
 
 const props = defineProps({
   foreground: String,

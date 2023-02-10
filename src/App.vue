@@ -133,7 +133,7 @@ const ratio = computed(() => {
             tune
           </span>
         </div>
-        <ColorTunning v-if="selectedColor" :hex="selectedColor" />
+        <ColorTunning :hex="colorStore.colorScheme.info" />
 
         <!-- <div class="info">
           <div class="circle text1"></div>
