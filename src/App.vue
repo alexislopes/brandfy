@@ -1,11 +1,15 @@
 <script setup>
-import { ref, onUpdated, nextTick } from "vue"
+import { ref, onUpdated, nextTick, computed } from "vue"
 import chroma from "chroma-js";
 import { useColorScheme } from './composables/useColorScheme.js'
 import { useColorUtils } from './composables/useColorUtils.js'
 
 import ContrastRatio from './components/ContrastRatio.vue'
 import ColorTunning from './components/ColorTunning.vue'
+
+import { useColorStore } from './stores/useColorStore.js'
+
+const colorStore = useColorStore();
 
 const { getStyle, getContrast } = useColorUtils();
 
@@ -28,38 +32,47 @@ function changeLightness(e) {
 const titles = ref([
   {
     nome: "Brand",
-    style: '--brand'
+    style: '--brand',
+    key: 'brand'
   },
   {
     nome: 'Text 1',
-    style: '--text1'
+    style: '--text1',
+    key: 'text1'
   },
   {
     nome: 'Text 2',
-    style: '--text2'
+    style: '--text2',
+    key: 'text2'
   },
   {
     nome: 'Fail',
-    style: '--fail-hex'
+    style: '--fail-hex',
+    key: 'fail'
   },
   {
     nome: 'Info',
-    style: '--info-hex'
+    style: '--info-hex',
+    key: 'info'
   },
   {
     nome: 'Success',
-    style: '--success-hex'
+    style: '--success-hex',
+    key: 'success'
   },
   {
     nome: 'Caution',
-    style: '--caution-hex'
+    style: '--caution-hex',
+    key: 'caution'
   }
 ]);
 
 const selectedColor = ref(undefined);
 const index = ref(0);
 
-
+const ratio = computed(() => {
+  return colorStore.getSurface1Contrast[titles[index].key]
+})
 
 </script>
 
@@ -87,20 +100,20 @@ const index = ref(0);
 
             <div class="container">
               <div class="box rad-shadow surface1">
-                <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface1')))" />
+                <ContrastRatio :ratio="colorStore.getSurface1Contrast[titles[index].key]"
+                  :color="colorStore.colorScheme[titles[index].key]" />
               </div>
               <div class="box rad-shadow surface2">
-                <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface2')))" />
+                <ContrastRatio :ratio="colorStore.getSurface2Contrast[titles[index].key]"
+                  :color="colorStore.colorScheme[titles[index].key]" />
               </div>
               <div class="box rad-shadow surface3">
-                <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface3')))" />
+                <ContrastRatio :ratio="colorStore.getSurface3Contrast[titles[index].key]"
+                  :color="colorStore.colorScheme[titles[index].key]" />
               </div>
               <div class="box rad-shadow surface4">
-                <ContrastRatio :color="getStyle(titles[index].style)"
-                  :ratio="Number(getContrast(getStyle(titles[index].style), getStyle('--surface4')))" />
+                <ContrastRatio :ratio="colorStore.getSurface4Contrast[titles[index].key]"
+                  :color="colorStore.colorScheme[titles[index].key]" />
               </div>
             </div>
           </div>
@@ -113,7 +126,7 @@ const index = ref(0);
       </div>
       <section class="brand-info">
         <div class="info" v-for="title in titles">
-          <div class="circle" :style="`background: var(${title.style})`"></div>
+          <div class="circle" :style="`background: ${colorStore.colorScheme[title.key]}`"></div>
           <p>{{ title.nome }}</p>
           <span @click="selectedColor = getStyle(title.style); index = titles.findIndex(elm => elm.nome === title.nome)"
             class="material-icons" style="cursor: pointer;">
@@ -204,7 +217,7 @@ const index = ref(0);
 .code-container {
   width: 100%;
   height: 100%;
-  background: var(--surface2);
+  background: v-bind(colorStore.colorScheme.surface2);
   border-radius: 20px;
 
 }
@@ -212,7 +225,7 @@ const index = ref(0);
 .switcher {
   display: flex;
   width: fit-content;
-  background: var(--surface2);
+  background: v-bind(colorStore.colorScheme.surface1);
   /* padding: 0 0.3rem; */
   border-radius: 20px;
 
@@ -240,7 +253,7 @@ const index = ref(0);
 }
 
 .item.active {
-  background: var(--surface4);
+  background: v-bind(colorStore.colorScheme.surface4);
   border-radius: 20px;
 }
 
@@ -274,57 +287,57 @@ p {
 
 
 .brand {
-  background: var(--brand);
+  background: v-bind(colorStore.colorScheme.brand);
 }
 
 .text1 {
-  background: var(--text1);
+  background: v-bind(colorStore.colorScheme.text1);
 }
 
 .text2 {
-  background: var(--text2);
+  background: v-bind(colorStore.colorScheme.text2);
 }
 
 .info-accent {
   /* background: hsl(var(--info-hue) var(--saturation) var(--lightness)); */
-  background: var(--info);
+  background: v-bind(colorStore.colorScheme.info);
 
 }
 
 .fail-accent {
   /* background: hsl(var(--fail-hue) var(--saturation) var(--lightness)); */
-  background: var(--fail);
+  background: v-bind(colorStore.colorScheme.fail);
 
 }
 
 .caution-accent {
   /* background: hsl(var(--caution-hue) var(--saturation) var(--lightness)); */
-  background: var(--caution);
+  background: v-bind(colorStore.colorScheme.caution);
 
 }
 
 .success-accent {
   /* background: hsl(var(--success-hue) var(--saturation) var(--lightness)); */
-  background: var(--success);
+  background: v-bind(colorStore.colorScheme.success);
 }
 
 .surface1 {
-  background: var(--surface1);
+  background: v-bind(colorStore.colorScheme.surface1);
   grid-area: surface1;
 }
 
 .surface2 {
-  background: var(--surface2);
+  background: v-bind(colorStore.colorScheme.surface2);
   grid-area: surface2;
 }
 
 .surface3 {
-  background: var(--surface3);
+  background: v-bind(colorStore.colorScheme.surface3);
   grid-area: surface3;
 }
 
 .surface4 {
-  background: var(--surface4);
+  background: v-bind(colorStore.colorScheme.surface4);
   grid-area: surface4;
 }
 
@@ -349,7 +362,7 @@ p {
 }
 
 body {
-  background: var(--surface1);
+  background: v-bind(colorStore.colorScheme.surface1);
 }
 
 .container {
