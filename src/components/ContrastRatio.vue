@@ -1,7 +1,7 @@
 <template>
   <div class="contrast-ratio">
     <div class="circle" :style="`background: ${color};`"></div>
-    <p>{{ ratio }}</p>
+    <p>{{ ratio.toFixed(2) }}</p>
     <span v-if="ratio >= 4.5" class="material-icons" style="color: var(--success)">
       check
     </span>
@@ -12,16 +12,13 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
-
-
 
 const props = defineProps({
+  foreground: String,
+  background: String,
   color: String,
   ratio: Number
 });
-
-const { color, ratio } = toRefs(props)
 
 </script>
 
