@@ -62,5 +62,17 @@ export const useDimColorScheme = (brandColor) => {
     return chroma.hsl(randomIntFromInterval(51, 60), s, l).hex()
   });
 
-  return { brand, text1, text2, surface1, surface2, surface3, surface4, info, success, fail, caution }
+  const hue = computed(() => {
+    return chroma(brandColor).hsl()[0]
+  })
+
+  const shadowStrength = computed(() => {
+    return 0.2
+  })
+
+  const surfaceShadow = computed(() => {
+    return `${hue.value} 30% 13%`
+  })
+
+  return { brand, text1, text2, surface1, surface2, surface3, surface4, info, success, fail, caution, hue, shadowStrength, surfaceShadow }
 }

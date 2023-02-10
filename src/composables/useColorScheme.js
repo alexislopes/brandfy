@@ -108,60 +108,59 @@ export const useColorScheme = (brandColor) => {
   onMounted(() => {
 
 
-    document.querySelector(':root').style.setProperty('--brand-hue', chroma(brandColor).hsl()[0]);
+    // document.querySelector(':root').style.setProperty('--brand-hue', chroma(brandColor).hsl()[0]);
 
-    document.querySelector(':root').style.setProperty('--brand-light', brandLight.value);
-    document.querySelector(':root').style.setProperty('--brand-dark', brandDark.value);
-    document.querySelector(':root').style.setProperty('--brand-dim', brandDim.value);
+    // document.querySelector(':root').style.setProperty('--brand-light', brandLight.value);
+    // document.querySelector(':root').style.setProperty('--brand-dark', brandDark.value);
+    // document.querySelector(':root').style.setProperty('--brand-dim', brandDim.value);
 
-    document.querySelector(':root').style.setProperty('--text1-light', text1Light.value);
-    document.querySelector(':root').style.setProperty('--text2-light', text2Light.value);
+    // document.querySelector(':root').style.setProperty('--text1-light', text1Light.value);
+    // document.querySelector(':root').style.setProperty('--text2-light', text2Light.value);
 
-    document.querySelector(':root').style.setProperty('--text1-dark', text1Dark.value);
-    document.querySelector(':root').style.setProperty('--text2-dark', text2Dark.value);
+    // document.querySelector(':root').style.setProperty('--text1-dark', text1Dark.value);
+    // document.querySelector(':root').style.setProperty('--text2-dark', text2Dark.value);
 
-    document.querySelector(':root').style.setProperty('--text1-dim', text1Dim.value);
-    document.querySelector(':root').style.setProperty('--text2-dim', text2Dim.value);
+    // document.querySelector(':root').style.setProperty('--text1-dim', text1Dim.value);
+    // document.querySelector(':root').style.setProperty('--text2-dim', text2Dim.value);
 
-    document.querySelector(':root').style.setProperty('--surface1-light', surface1Light.value);
-    document.querySelector(':root').style.setProperty('--surface2-light', surface2Light.value);
-    document.querySelector(':root').style.setProperty('--surface3-light', surface3Light.value);
-    document.querySelector(':root').style.setProperty('--surface4-light', surface4Light.value);
-    document.querySelector(':root').style.setProperty('--surface-shadow-light', 'var(--brand-hue) 10% 20%');
-    document.querySelector(':root').style.setProperty('--shadow-strength-light', .2);
+    // document.querySelector(':root').style.setProperty('--surface1-light', surface1Light.value);
+    // document.querySelector(':root').style.setProperty('--surface2-light', surface2Light.value);
+    // document.querySelector(':root').style.setProperty('--surface3-light', surface3Light.value);
+    // document.querySelector(':root').style.setProperty('--surface4-light', surface4Light.value);
 
-    document.querySelector(':root').style.setProperty('--surface1-dark', surface1Dark.value);
-    document.querySelector(':root').style.setProperty('--surface2-dark', surface2Dark.value);
-    document.querySelector(':root').style.setProperty('--surface3-dark', surface3Dark.value);
-    document.querySelector(':root').style.setProperty('--surface4-dark', surface4Dark.value);
-    document.querySelector(':root').style.setProperty('--surface-shadow-dark', `${chroma(brandDark.value).hsl()[0]} 50% 3%`);
-    document.querySelector(':root').style.setProperty('--shadow-strength-dark', .8);
 
-    document.querySelector(':root').style.setProperty('--surface1-dim', surface1Dim.value);
-    document.querySelector(':root').style.setProperty('--surface2-dim', surface2Dim.value);
-    document.querySelector(':root').style.setProperty('--surface3-dim', surface3Dim.value);
-    document.querySelector(':root').style.setProperty('--surface4-dim', surface4Dim.value);
-    document.querySelector(':root').style.setProperty('--surface-shadow-dim', `${chroma(brandDim.value).hsl()[0]} 30% 13%`);
-    document.querySelector(':root').style.setProperty('--shadow-strength-dim', .2);
+    // document.querySelector(':root').style.setProperty('--surface1-dark', surface1Dark.value);
+    // document.querySelector(':root').style.setProperty('--surface2-dark', surface2Dark.value);
+    // document.querySelector(':root').style.setProperty('--surface3-dark', surface3Dark.value);
+    // document.querySelector(':root').style.setProperty('--surface4-dark', surface4Dark.value);
+    // document.querySelector(':root').style.setProperty('--surface-shadow-dark', `${chroma(brandDark.value).hsl()[0]} 50% 3%`);
+    // document.querySelector(':root').style.setProperty('--shadow-strength-dark', .8);
 
-    document.querySelector(':root').style.setProperty('--fail-hue', fail_hue);
+    // document.querySelector(':root').style.setProperty('--surface1-dim', surface1Dim.value);
+    // document.querySelector(':root').style.setProperty('--surface2-dim', surface2Dim.value);
+    // document.querySelector(':root').style.setProperty('--surface3-dim', surface3Dim.value);
+    // document.querySelector(':root').style.setProperty('--surface4-dim', surface4Dim.value);
+    // document.querySelector(':root').style.setProperty('--surface-shadow-dim', `${chroma(brandDim.value).hsl()[0]} 30% 13%`);
+    // document.querySelector(':root').style.setProperty('--shadow-strength-dim', .2);
 
-    document.querySelector(':root').style.setProperty('--success-hue', success_hue);
+    // document.querySelector(':root').style.setProperty('--fail-hue', fail_hue);
 
-    document.querySelector(':root').style.setProperty('--caution-hue', caution_hue);
+    // document.querySelector(':root').style.setProperty('--success-hue', success_hue);
 
-    document.querySelector(':root').style.setProperty('--info-hue', info_hue);
+    // document.querySelector(':root').style.setProperty('--caution-hue', caution_hue);
 
-    document.querySelector(':root').style.setProperty('--saturation', `${saturation}%`);
+    // document.querySelector(':root').style.setProperty('--info-hue', info_hue);
 
-    document.querySelector(':root').style.setProperty('--lightness-status', `${lightness}%`);
+    // document.querySelector(':root').style.setProperty('--saturation', `${saturation}%`);
 
-    document.querySelector(':root').style.setProperty('--lightness-light', `${lightness * 0.7}%`);
+    // document.querySelector(':root').style.setProperty('--lightness-status', `${lightness}%`);
 
-    document.querySelector(':root').style.setProperty('--info-hex', HSLToHex(info_hue, saturation, lightness));
-    document.querySelector(':root').style.setProperty('--success-hex', HSLToHex(success_hue, saturation, lightness));
-    document.querySelector(':root').style.setProperty('--caution-hex', HSLToHex(caution_hue, saturation, lightness));
-    document.querySelector(':root').style.setProperty('--fail-hex', HSLToHex(fail_hue, saturation, lightness));
+    // document.querySelector(':root').style.setProperty('--lightness-light', `${lightness * 0.7}%`);
+
+    // document.querySelector(':root').style.setProperty('--info-hex', HSLToHex(info_hue, saturation, lightness));
+    // document.querySelector(':root').style.setProperty('--success-hex', HSLToHex(success_hue, saturation, lightness));
+    // document.querySelector(':root').style.setProperty('--caution-hex', HSLToHex(caution_hue, saturation, lightness));
+    // document.querySelector(':root').style.setProperty('--fail-hex', HSLToHex(fail_hue, saturation, lightness));
 
 
 

@@ -60,10 +60,25 @@ export const useLightColorScheme = (brandColor) => {
     return chroma.hsl(randomIntFromInterval(51, 60), s, l).hex()
   });
 
+  const hue = computed(() => {
+    return chroma(brandColor).hsl()[0]
+  })
+
+  const shadowStrength = computed(() => {
+    return 0.2
+  })
+
+  const surfaceShadow = computed(() => {
+    return `${hue.value} 10% 20%`
+  })
+
   const fail_hue = randomIntFromInterval(0, 15)
   const success_hue = randomIntFromInterval(81, 140)
   const caution_hue = randomIntFromInterval(51, 60)
   const info_hue = randomIntFromInterval(221, 240)
 
-  return { brand, text1, text2, surface1, surface2, surface3, surface4, info, fail, success, caution }
+  // document.querySelector(':root').style.setProperty('--surface-shadow-light', `${hue.value} 10% 20%`);
+  // document.querySelector(':root').style.setProperty('--shadow-strength-light', .2);
+
+  return { brand, text1, text2, surface1, surface2, surface3, surface4, info, fail, success, caution, hue, shadowStrength, surfaceShadow }
 }
