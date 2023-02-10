@@ -5,6 +5,7 @@ import { useLightColorScheme } from './useLightColorScheme';
 import { useDarkColorScheme } from './useDarkColorScheme';
 import { useDimColorScheme } from './useDimColorScheme';
 
+import { useColorStore } from '../stores/useColorStore.js'
 import { useColorUtils } from './useColorUtils.js'
 
 const { HSLToHex } = useColorUtils();
@@ -14,11 +15,15 @@ const { HSLToHex } = useColorUtils();
 
 export const useColorScheme = (brandColor) => {
 
+
+  const colorStore = useColorStore();
+
   const scheme = ref(usePreferredColorScheme().value)
 
   const changeColorScheme = (s) => {
     scheme.value = s
-    document.firstElementChild.setAttribute('color-scheme', s)
+    document.firstElementChild.setAttribute('color-scheme', s);
+    colorStore.changeColorScheme(s)
   }
 
   const schemes = ref({
