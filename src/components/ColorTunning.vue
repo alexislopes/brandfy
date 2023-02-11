@@ -1,7 +1,7 @@
 <template>
   <div class="color-tunning-container rad-shadow">
     <div @click="isOpen = !isOpen" class="color-tunning-header">
-      <p class="color-tunning-header-title">Tune Caution Color</p>
+      <p class="color-tunning-header-title">Tune {{ scope }} Color</p>
       <span v-if="!isOpen" class="material-icons">
         keyboard_double_arrow_up
       </span>
@@ -9,37 +9,42 @@
         keyboard_double_arrow_down
       </span>
     </div>
-    <div v-if="isOpen">
-      <p>Tunning x color</p>
-      <div style="display: flex; justify-content: space-between;">
-        {{ hex }} > {{ newHex }}
+    <div v-if="isOpen" style="padding: 0 1rem; padding-bottom: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+      <div style="display: flex; justify-content: space-between; flex-direction: column;">
         <div class="color-box" :style="`background-color: ${hex};`">&nbsp;</div>
-        <div class="color-box" :style="`background-color: ${newHex};`">&nbsp;</div>
+        <div
+          :style="`border: 1.5px solid ${hex}; border-radius: 4px; padding: 0.4rem; text-align: center; gap: 1rem; display: flex; justify-content: center; margin: 1rem 0;`">
+          <span>{{ hex }}</span>
+          <span class="material-icons" style="font-size: large; cursor: pointer;">
+            content_copy
+          </span>
+
+        </div>
       </div>
       <div>
         <label style="display: flex; align-items: center;" for="">
-          Hue
-          <div style="display: flex;">
-            <p>{{ hue }}</p>
-            <input type="range" v-model.number="currentHue" min="221" max="240" name="" id="">
-          </div>
+          Hue: {{ hue.toFixed(2) }}
         </label>
+        <div style="display: flex; width: 100%;">
+          <input style="width: 100%;" type="range" v-model.number="currentHue" :step="0.01" min="221" max="240" name=""
+            id="">
+        </div>
       </div>
       <div style="display: flex; flex-direction: column;">
         <label style="display: flex; align-items: center;" for="">
-          Saturation
-          <div style="display: flex;">
-            <p>{{ saturation }}</p>
-            <input type="range" v-model.number="currentSaturation" name="" id="">
-          </div>
+          Saturation: {{ saturation.toFixed(2) }}
         </label>
+        <div style="display: flex; width: 100%;">
+          <input style="width: 100%;" type="range" v-model.number="currentSaturation" :step="0.01" name="" id="">
+        </div>
+      </div>
+      <div>
         <label style="display: flex; align-items: center;" for="">
-          Lightness
-          <div style="display: flex;">
-            <p>{{ lightness }}</p>
-            <input type="range" v-model.number="currentLightness" name="" id="">
-          </div>
+          Lightness: {{ lightness.toFixed(2) }}
         </label>
+        <div style="display: flex; width: 100%;">
+          <input style="width: 100%;" type="range" v-model.number="currentLightness" :step="0.01" name="" id="">
+        </div>
       </div>
     </div>
   </div>
@@ -61,7 +66,8 @@ const { getStyle, HSLToHex } = useColorUtils()
 
 const props = defineProps({
   hex: String,
-  range: Array
+  range: Array,
+  scope: String
 })
 
 
@@ -113,7 +119,7 @@ watch(newHex, (value) => {
 <style scoped>
 .color-box {
   display: block;
-  width: 40%;
+  width: 100%;
   height: 100%;
   color: v-bind(colorStore.colorScheme.text1);
   min-width: 20px;

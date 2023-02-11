@@ -70,17 +70,10 @@ const titles = ref([
 const selectedColor = ref(undefined);
 const index = ref(0);
 
-const ratio = computed(() => {
-  return colorStore.getSurface1Contrast[titles[index].key]
-})
-
 function changeColor(color) {
   colorStore.$patch(state => {
-    state.colorScheme = Object.assign(state.colorScheme, { info: color })
+    state.colorScheme = Object.assign(state.colorScheme, { [titles.value[index.value].key]: color })
   })
-  // colorStore.updateColor(titles.value[index.value].key, color)
-  // colorStore.$patch({ colorScheme: { [titles.value[index.value].key]: color } })
-  console.log(colorStore.colorScheme.info)
 }
 
 </script>
@@ -142,7 +135,8 @@ function changeColor(color) {
             tune
           </span>
         </div>
-        <ColorTunning :hex="colorStore.colorScheme.info" @change="changeColor" />
+        <ColorTunning :scope="titles[index].nome" :hex="colorStore.colorScheme[titles[index].key]"
+          @change="changeColor" />
 
         <!-- <div class="info">
           <div class="circle text1"></div>
