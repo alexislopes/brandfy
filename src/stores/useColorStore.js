@@ -5,6 +5,9 @@ import { useDarkColorScheme } from '../composables/useDarkColorScheme'
 import { useDimColorScheme } from '../composables/useDimColorScheme'
 import { usePreferredColorScheme } from '@vueuse/core'
 
+
+
+
 export const useColorStore = () => {
   const colorStore = defineStore('color', {
     state: () => {
@@ -23,9 +26,7 @@ export const useColorStore = () => {
           this.colorScheme = useDimColorScheme(this.brand)
         }
       },
-      setBrand(color) {
-        this.brand = color
-      }
+
     },
     getters: {
       getSurface1Contrast() {

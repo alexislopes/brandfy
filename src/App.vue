@@ -74,6 +74,15 @@ const ratio = computed(() => {
   return colorStore.getSurface1Contrast[titles[index].key]
 })
 
+function changeColor(color) {
+  colorStore.$patch(state => {
+    state.colorScheme = Object.assign(state.colorScheme, { info: color })
+  })
+  // colorStore.updateColor(titles.value[index.value].key, color)
+  // colorStore.$patch({ colorScheme: { [titles.value[index.value].key]: color } })
+  console.log(colorStore.colorScheme.info)
+}
+
 </script>
 
 <template>
@@ -133,7 +142,7 @@ const ratio = computed(() => {
             tune
           </span>
         </div>
-        <ColorTunning :hex="colorStore.colorScheme.info" />
+        <ColorTunning :hex="colorStore.colorScheme.info" @change="changeColor" />
 
         <!-- <div class="info">
           <div class="circle text1"></div>

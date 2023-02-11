@@ -47,9 +47,11 @@
 
 <script setup>
 import chroma from 'chroma-js';
-import { toRefs, computed, ref } from 'vue';
+import { toRefs, computed, ref, watch } from 'vue';
 import { useColorUtils } from '../composables/useColorUtils'
 import { useColorStore } from '../stores/useColorStore.js'
+
+const emit = defineEmits(['change'])
 
 const colorStore = useColorStore()
 
@@ -100,6 +102,10 @@ const currentLightness = computed({
 
 const newHex = computed(() => {
   return HSLToHex(hue.value, saturation.value, lightness.value);
+})
+
+watch(newHex, (value) => {
+  emit('change', value)
 })
 
 </script>
