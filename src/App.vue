@@ -6,6 +6,7 @@ import { useColorUtils } from './composables/useColorUtils.js'
 
 import ContrastRatio from './components/ContrastRatio.vue'
 import ColorTunning from './components/ColorTunning.vue'
+import Settings from './components/Settings.vue'
 
 import { useColorStore } from './stores/useColorStore.js'
 
@@ -72,14 +73,21 @@ const index = ref(0);
 
 function changeColor(color) {
   colorStore.$patch(state => {
-    state.colorScheme = Object.assign(state.colorScheme, { [titles.value[index.value].key]: color })
-  })
+    state.colorScheme = Object.assign(state.colorScheme, { [titles.value[index.value].key]: color });
+
+    if (index.value === 0) {
+      state.brand = color
+    }
+  });
+
+
 }
 
 </script>
 
 <template>
   <div class="switcher-container">
+    <Settings />
     <div class="switcher">
       <p class="item" :class="{ active: scheme === 'light' }" @click="changeColorScheme('light')">Light</p>
       <p class="item" :class="{ active: scheme === 'dark' }" @click="changeColorScheme('dark')">Dark</p>
@@ -220,7 +228,7 @@ function changeColor(color) {
 .code-container {
   width: 100%;
   height: 100%;
-  background: v-bind(colorStore.colorScheme.surface2);
+  background: v-bind('colorStore.colorScheme.surface2');
   border-radius: 20px;
 
 }
@@ -228,7 +236,7 @@ function changeColor(color) {
 .switcher {
   display: flex;
   width: fit-content;
-  background: v-bind(colorStore.colorScheme.surface1);
+  background: v-bind('colorStore.colorScheme.surface1');
   /* padding: 0 0.3rem; */
   border-radius: 20px;
 
@@ -256,7 +264,7 @@ function changeColor(color) {
 }
 
 .item.active {
-  background: v-bind(colorStore.colorScheme.surface4);
+  background: v-bind('colorStore.colorScheme.surface4');
   border-radius: 20px;
 }
 
@@ -290,68 +298,68 @@ p {
 
 
 .brand {
-  background: v-bind(colorStore.colorScheme.brand);
+  background: v-bind('colorStore.colorScheme.brand');
 }
 
 .text1 {
-  background: v-bind(colorStore.colorScheme.text1);
+  background: v-bind('colorStore.colorScheme.text1');
 }
 
 .text2 {
-  background: v-bind(colorStore.colorScheme.text2);
+  background: v-bind('colorStore.colorScheme.text2');
 }
 
 .info-accent {
   /* background: hsl(var(--info-hue) var(--saturation) var(--lightness)); */
-  background: v-bind(colorStore.colorScheme.info);
+  background: v-bind('colorStore.colorScheme.info');
 
 }
 
 .fail-accent {
   /* background: hsl(var(--fail-hue) var(--saturation) var(--lightness)); */
-  background: v-bind(colorStore.colorScheme.fail);
+  background: v-bind('colorStore.colorScheme.fail');
 
 }
 
 .caution-accent {
   /* background: hsl(var(--caution-hue) var(--saturation) var(--lightness)); */
-  background: v-bind(colorStore.colorScheme.caution);
+  background: v-bind('colorStore.colorScheme.caution');
 
 }
 
 .success-accent {
   /* background: hsl(var(--success-hue) var(--saturation) var(--lightness)); */
-  background: v-bind(colorStore.colorScheme.success);
+  background: v-bind('colorStore.colorScheme.success');
 }
 
 .surface1 {
-  background: v-bind(colorStore.colorScheme.surface1);
+  background: v-bind('colorStore.colorScheme.surface1');
   grid-area: surface1;
 }
 
 .surface2 {
-  background: v-bind(colorStore.colorScheme.surface2);
+  background: v-bind('colorStore.colorScheme.surface2');
   grid-area: surface2;
 }
 
 .surface3 {
-  background: v-bind(colorStore.colorScheme.surface3);
+  background: v-bind('colorStore.colorScheme.surface3');
   grid-area: surface3;
 }
 
 .surface4 {
-  background: v-bind(colorStore.colorScheme.surface4);
+  background: v-bind('colorStore.colorScheme.surface4');
   grid-area: surface4;
 }
 
 .rad-shadow {
   box-shadow:
-    0 2.8px 2.2px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / calc(v-bind(colorStore.colorScheme.shadowStrength) + .03)),
-    0 6.7px 5.3px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / calc(v-bind(colorStore.colorScheme.shadowStrength) + .01)),
-    0 12.5px 10px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / calc(v-bind(colorStore.colorScheme.shadowStrength) + .02)),
-    0 22.3px 17.9px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / calc(v-bind(colorStore.colorScheme.shadowStrength) + .02)),
-    0 41.8px 33.4px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / calc(v-bind(colorStore.colorScheme.shadowStrength) + .03)),
-    0 100px 80px hsl(v-bind(colorStore.colorScheme.surfaceShadow) / v-bind(colorStore.colorScheme.shadowStrength));
+    0 2.8px 2.2px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / calc(v-bind('colorStore.colorScheme.shadowStrength') + .03)),
+    0 6.7px 5.3px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / calc(v-bind('colorStore.colorScheme.shadowStrength') + .01)),
+    0 12.5px 10px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / calc(v-bind('colorStore.colorScheme.shadowStrength') + .02)),
+    0 22.3px 17.9px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / calc(v-bind('colorStore.colorScheme.shadowStrength') + .02)),
+    0 41.8px 33.4px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / calc(v-bind('colorStore.colorScheme.shadowStrength') + .03)),
+    0 100px 80px hsl(v-bind('colorStore.colorScheme.surfaceShadow') / v-bind('colorStore.colorScheme.shadowStrength'));
 }
 
 .box {
@@ -365,7 +373,7 @@ p {
 }
 
 body {
-  background: v-bind(colorStore.colorScheme.surface1);
+  background: v-bind('colorStore.colorScheme.surface1');
 }
 
 .container {

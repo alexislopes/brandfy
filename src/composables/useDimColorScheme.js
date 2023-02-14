@@ -21,7 +21,7 @@ export const useDimColorScheme = (brandColor) => {
   const success = ref(chroma.hsl(randomIntFromInterval(81, 140), saturation, lightness).hex());
   const caution = ref(chroma.hsl(randomIntFromInterval(51, 60), saturation, lightness).hex());
   const shadowStrength = ref(0.2)
-  const surfaceShadow = ref(`${hue.value} 30% 13%`)
+  const surfaceShadow = ref(`${hue} 30% 13%`)
 
   return {
     brand,

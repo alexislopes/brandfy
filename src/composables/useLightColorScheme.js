@@ -1,7 +1,10 @@
 import chroma from "chroma-js";
 import { ref } from 'vue';
+import { useSettingsStore } from "../stores/useSettingsStore";
 
 export const useLightColorScheme = (brandColor) => {
+
+  const settingsStore = useSettingsStore()
 
   function randomIntFromInterval(min, max) { // min and max included 
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -15,12 +18,12 @@ export const useLightColorScheme = (brandColor) => {
   const surface2 = ref(chroma.hsl(hue, 0.20, 0.99).hex());
   const surface3 = ref(chroma.hsl(hue, 0.20, 0.92).hex());
   const surface4 = ref(chroma.hsl(hue, 0.20, 0.85).hex());
-  const info = ref(chroma.hsl(randomIntFromInterval(221, 240), saturation, lightness).hex());
-  const fail = ref(chroma.hsl(randomIntFromInterval(0, 15), saturation, lightness).hex());
-  const success = ref(chroma.hsl(randomIntFromInterval(81, 140), saturation, lightness).hex());
-  const caution = ref(chroma.hsl(randomIntFromInterval(51, 60), saturation, lightness).hex());
+  const info = ref(chroma.hsl(randomIntFromInterval(settingsStore.info.min, settingsStore.info.max), saturation, lightness).hex());
+  const fail = ref(chroma.hsl(randomIntFromInterval(settingsStore.fail.min, settingsStore.fail.max), saturation, lightness).hex());
+  const success = ref(chroma.hsl(randomIntFromInterval(settingsStore.success.min, settingsStore.success.max), saturation, lightness).hex());
+  const caution = ref(chroma.hsl(randomIntFromInterval(settingsStore.caution.min, settingsStore.caution.max), saturation, lightness).hex());
   const shadowStrength = ref(0.2)
-  const surfaceShadow = ref(`${hue.value} 10% 20%`)
+  const surfaceShadow = ref(`${hue} 10% 20%`)
 
 
 

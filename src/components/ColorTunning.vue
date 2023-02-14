@@ -26,8 +26,8 @@
           Hue: {{ hue.toFixed(2) }}
         </label>
         <div style="display: flex; width: 100%;">
-          <input style="width: 100%;" type="range" v-model.number="currentHue" :step="0.01" min="221" max="240" name=""
-            id="">
+          <input style="width: 100%;" type="range" v-model.number="hue" :step="0.01" :min="range.min" :max="range.max"
+            name="" id="">
         </div>
       </div>
       <div style="display: flex; flex-direction: column;">
@@ -35,7 +35,7 @@
           Saturation: {{ saturation.toFixed(2) }}
         </label>
         <div style="display: flex; width: 100%;">
-          <input style="width: 100%;" type="range" v-model.number="currentSaturation" :step="0.01" name="" id="">
+          <input style="width: 100%;" type="range" min="1" v-model.number="saturation" :step="0.01" name="" id="">
         </div>
       </div>
       <div>
@@ -43,7 +43,7 @@
           Lightness: {{ lightness.toFixed(2) }}
         </label>
         <div style="display: flex; width: 100%;">
-          <input style="width: 100%;" type="range" v-model.number="currentLightness" :step="0.01" name="" id="">
+          <input style="width: 100%;" type="range" min="1" v-model.number="lightness" :step="0.01" name="" id="">
         </div>
       </div>
     </div>
@@ -53,65 +53,49 @@
 <script setup>
 import chroma from 'chroma-js';
 import { toRefs, computed, ref, watch } from 'vue';
-import { useColorUtils } from '../composables/useColorUtils'
 import { useColorStore } from '../stores/useColorStore.js'
+import { useSettingsStore } from '../stores/useSettingsStore';
 
 const emit = defineEmits(['change'])
 
-const colorStore = useColorStore()
+const colorStore = useColorStore();
+const settingsStore = useSettingsStore();
 
 const isOpen = ref(false)
 
-const { getStyle, HSLToHex } = useColorUtils()
-
 const props = defineProps({
   hex: String,
-  range: Array,
   scope: String
-})
+});
 
+const { hex, scope } = toRefs(props);
 
-const { hex } = toRefs(props);
+const range = ref({ min: 0, max: 360 });
+
 const hue = ref(chroma(hex.value).hsl()[0])
 const saturation = ref(chroma(hex.value).hsl()[1])
 const lightness = ref(chroma(hex.value).hsl()[2])
 
-const currentHue = computed({
-  get() {
-    return hue.value
-  },
 
-  set(value) {
-    hue.value = value;
-  }
-});
-
-const currentSaturation = computed({
-  get() {
-    return saturation.value
-  },
-
-  set(value) {
-    saturation.value = value;
-  }
-});
-
-const currentLightness = computed({
-  get() {
-    return lightness.value
-  },
-
-  set(value) {
-    lightness.value = value;
-  }
-});
-
-const newHex = computed(() => {
-  return HSLToHex(hue.value, saturation.value, lightness.value);
+watch(hex, (value) => {
+  const [h, s, l] = chroma(value).hsl();
+  hue.value = h
+  saturation.value = s
+  lightness.value = l
 })
 
-watch(newHex, (value) => {
-  emit('change', value)
+// watch(() => colorStore.brand, (value) => {
+//   console.log(value)
+//   colorStore.changeColorScheme(usePreferredColorScheme())
+// })
+
+watch(scope, (value) => {
+  console.log(value)
+  range.value = settingsStore[value.toLowerCase()] || { min: 0, max: 360 }
+})
+
+watch([hue, saturation, lightness], ([hue, saturation, lightness]) => {
+  emit('change', chroma.hsl(hue, saturation, lightness).hex())
 })
 
 </script>
@@ -121,7 +105,7 @@ watch(newHex, (value) => {
   display: block;
   width: 100%;
   height: 100%;
-  color: v-bind(colorStore.colorScheme.text1);
+  color: v-bind('colorStore.colorScheme.text1');
   min-width: 20px;
   border-radius: 5px;
 }
@@ -130,7 +114,7 @@ watch(newHex, (value) => {
   margin-right: 4rem;
   /* padding: 1rem; */
 
-  background: v-bind(colorStore.colorScheme.surface1);
+  background: v-bind('colorStore.colorScheme.surface1');
   position: absolute;
   bottom: 0;
   right: 0;
